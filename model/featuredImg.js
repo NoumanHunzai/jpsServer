@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+const ImageSchema = new mongoose.Schema({
+  imageUrl: { type: String },
+});
+
 const imageSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -14,12 +18,13 @@ const imageSchema = new mongoose.Schema({
     maxlength: [250, "Max Length must be 250"],
     minlength: [10, "Min Length must be 10"],
   },
-  video_url: {
+  coverImage: {
     type: String,
     required: [true, "Must Be a  Image link"],
   },
+  images: [ImageSchema],
 });
 
-const FeaturedVideo = mongoose.model("FeatureVideo", imageSchema);
+const FeaturedVideo = mongoose.model("FeatureImages", imageSchema);
 
 module.exports = FeaturedVideo;

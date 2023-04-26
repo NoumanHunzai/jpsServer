@@ -5,12 +5,26 @@ const jwt = require("jsonwebtoken");
 
 const featureVideos = async (req, res, next) => {
   try {
-    const featuredImg = await FeaturedVideo.create(req.body);
+    const coverImageFile = req.files.coverImage[0];
+    const imageFiles = req.files.images;
+
+    // Save coverImage filename to FeaturedVideo model
+    const featuredImg = new FeaturedVideo({
+      title: req.body.title,
+      coverImage: coverImageFile.filename,
+      description: req.body.description,
+    });
+
+    // Save image filenames to FeaturedVideo model
+    featuredImg.images = imageFiles.map((image) => ({
+      imageUrl: image.filename,
+    }));
+
+    await featuredImg.save();
+
     res.status(201).json({
       status: "success",
-      data: {
-        featuredImg: featuredImg,
-      },
+      message: "Upload successful!",
     });
   } catch (err) {
     res.status(400).json({
@@ -25,7 +39,7 @@ const featureVideosList = async (req, res, next) => {
     if (!result) {
       return res.status(404).json({
         status: "Fail",
-        message: "Not Found Any Data With That ID",
+        message: "Not Found",
       });
     }
     res.status(200).json({
