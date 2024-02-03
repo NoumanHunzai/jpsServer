@@ -27,6 +27,7 @@ const featureVideos = async (req, res, next) => {
       message: "Upload successful!",
     });
   } catch (err) {
+    console.log(err);
     res.status(400).json({
       status: "Fail",
       message: err,
@@ -74,7 +75,7 @@ const login = async (req, res) => {
     { userId: user._id },
     "wake-eat-work-sleep-wake-eat-work-sleep",
     {
-      expiresIn: "1h",
+      expiresIn: "90d",
     }
   );
 
@@ -100,9 +101,38 @@ const authentication = async (req, res, next) => {
     return next({ code: 400, message: "No Request Found" });
   }
 };
+
+const deleteFeaturedImage = async (req, res, next) => {
+  try {
+    const videoId = req.params.id;
+    const featuredVideo = await FeaturedVideo.findOneAndDelete({
+      _id: videoId,
+    });
+
+    if (!featuredVideo) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Video not found",
+      });
+    }
+
+    res.status(204).json({
+      status: "success",
+      message: "Video deleted successfully",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "fail",
+      message: "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   featureVideos: featureVideos,
   featureVideosList: featureVideosList,
   login,
   authentication,
+  deleteFeaturedImage,
 };

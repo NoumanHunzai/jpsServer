@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use(express.urlencoded({ extended: false }));
-// app.use(express.static("uploads"));
+app.use(express.static("uploads"));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
