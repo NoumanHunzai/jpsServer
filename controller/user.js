@@ -129,10 +129,34 @@ const deleteFeaturedImage = async (req, res, next) => {
   }
 };
 
+const getFeaturedImageById = async (req, res, next) => {
+  try {
+    const videoId = req.params.id;
+    const featuredVideo = await FeaturedVideo.findOne({
+      _id: videoId,
+    });
+
+    if (!featuredVideo) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Video not found",
+      });
+    }
+    res.status(200).json(featuredVideo);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "fail",
+      message: "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   featureVideos: featureVideos,
   featureVideosList: featureVideosList,
   login,
   authentication,
   deleteFeaturedImage,
+  getFeaturedImageById,
 };

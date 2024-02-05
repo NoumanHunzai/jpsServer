@@ -16,5 +16,6 @@ router.post(
 );
 router.get("/featuredimages", userController.featureVideosList);
 router.delete("/featuredimages/:id", userController.deleteFeaturedImage);
+router.get("/featuredimages/:id", userController.getFeaturedImageById);
 
 module.exports = router;
