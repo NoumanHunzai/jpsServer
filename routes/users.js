@@ -18,4 +18,17 @@ router.get("/featuredimages", userController.featureVideosList);
 router.delete("/featuredimages/:id", userController.deleteFeaturedImage);
 router.get("/featuredimages/:id", userController.getFeaturedImageById);
 
+//Create Plan
+router.get("/plan/:id", userController.getSinglePlan);
+router.post("/plan", userController.createPlan);
+router.get("/plans", userController.getPlans);
+router.put("/plan/:id", userController.updatePlan);
+router.delete("/plan/:id", userController.deleteSinglePlan);
+
+//Protected Page Password
+router.post("/password", userController.savePassword);
+router.put("/password", userController.updatePassword);
+router.post("/password-login", userController.loginPassword);
+router.get("/checksession-client", auth, userController.authentication_login);
+
 module.exports = router;
