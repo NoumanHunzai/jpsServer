@@ -19,15 +19,15 @@ router.delete("/featuredimages/:id", userController.deleteFeaturedImage);
 router.get("/featuredimages/:id", userController.getFeaturedImageById);
 
 //Create Plan
-router.get("/plan/:id", userController.getSinglePlan);
-router.post("/plan", userController.createPlan);
+router.get("/plan/:id", auth, userController.getSinglePlan);
+router.post("/plan", auth, userController.createPlan);
 router.get("/plans", userController.getPlans);
-router.put("/plan/:id", userController.updatePlan);
-router.delete("/plan/:id", userController.deleteSinglePlan);
+router.put("/plan/:id", auth, userController.updatePlan);
+router.delete("/plan/:id", auth, userController.deleteSinglePlan);
 
 //Protected Page Password
-router.post("/password", userController.savePassword);
-router.put("/password", userController.updatePassword);
+router.post("/password", auth, userController.savePassword);
+router.put("/password", auth, userController.updatePassword);
 router.post("/password-login", userController.loginPassword);
 router.get("/checksession-client", auth, userController.authentication_login);
 
