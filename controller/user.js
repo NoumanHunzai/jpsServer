@@ -324,7 +324,11 @@ const instagramMedia = async (req, res, next) => {
     const data = await response.json();
 
     if (response.ok) {
-      return res.status(200).json(data);
+      const filteredData = data.data
+        .filter((item) => item.media_type === "CAROUSEL_ALBUM")
+        .slice(0, 8);
+
+      return res.status(200).json(filteredData);
     } else {
       console.log(data);
       return next({ code: response.status, message: data.error.message });
