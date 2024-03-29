@@ -311,6 +311,29 @@ const authentication_login = async (req, res, next) => {
   }
 };
 
+const instagramMedia = async (req, res, next) => {
+  try {
+    const accessToken = process.env.INSTA_KEY;
+    if (!accessToken) {
+      return res.status(400).json({ message: "Access token is required" });
+    }
+
+    const response = await fetch(
+      `https://graph.instagram.com/me/media?fields=id,media_type,media_url,caption&access_token=${accessToken}`
+    );
+    const data = await response.json();
+
+    if (response.ok) {
+      return res.status(200).json(data);
+    } else {
+      console.log(data);
+      return next({ code: response.status, message: data.error.message });
+    }
+  } catch (err) {
+    return next({ code: 500, message: err.message });
+  }
+};
+
 module.exports = {
   featureVideos: featureVideos,
   savePassword: savePassword,
@@ -319,6 +342,7 @@ module.exports = {
   getSinglePlan: getSinglePlan,
   deleteSinglePlan: deleteSinglePlan,
   authentication_login: authentication_login,
+  instagramMedia: instagramMedia,
   getPlans: getPlans,
   featureVideosList: featureVideosList,
   updatePassword: updatePassword,

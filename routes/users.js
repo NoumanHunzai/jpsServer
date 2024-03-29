@@ -27,8 +27,11 @@ router.delete("/plan/:id", auth, userController.deleteSinglePlan);
 
 //Protected Page Password
 router.post("/password", auth, userController.savePassword);
-router.put("/password", auth, userController.updatePassword);
+router.put("/password/:id", auth, userController.updatePassword);
 router.post("/password-login", userController.loginPassword);
 router.get("/checksession-client", auth, userController.authentication_login);
+
+//Get Instagram Posts
+router.get("/instagram-post", userController.instagramMedia);
 
 module.exports = router;
