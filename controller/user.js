@@ -319,18 +319,17 @@ const instagramMedia = async (req, res, next) => {
     }
 
     const response = await fetch(
-      `https://graph.instagram.com/me/media?fields=id,media_type,media_url,caption&access_token=${accessToken}`
+      `https://graph.instagram.com/me/media?fields=id,media_type,media_url,caption,timestamp&access_token=${accessToken}`
     );
     const data = await response.json();
 
     if (response.ok) {
       const filteredData = data.data
         .filter((item) => item.media_type === "CAROUSEL_ALBUM")
-        .slice(0, 8);
+        .slice(0, 7);
 
       return res.status(200).json(filteredData);
     } else {
-      console.log(data);
       return next({ code: response.status, message: data.error.message });
     }
   } catch (err) {
